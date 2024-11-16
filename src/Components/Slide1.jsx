@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
 import data from "./data/SlideData1.js";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const SecondPage = () => {
   const [hoveredData, setHoveredData] = useState(data[0]);
+  const location = useLocation();
 
-  const handleBarHover = (e) => {
-    if (e.activePayload) {
-      setHoveredData(e.activePayload[0].payload);
+  // Function to check if the current time is within the given range
+  const isWithinTimeRange = (startHour, endHour) => {
+    const currentHour = new Date().getHours();
+    return currentHour >= startHour && currentHour < endHour;
+  };
+
+  // Function to handle button click outside active hours
+  const handleButtonClick = (startHour, endHour) => {
+    if (!isWithinTimeRange(startHour, endHour)) {
+      alert(`This button will be active from ${startHour}:00 to ${endHour}:00.`);
+      return false;
     }
+    return true;
   };
 
   return (
@@ -25,7 +35,11 @@ const SecondPage = () => {
             width={320}
             height={400}
             data={data}
-            onMouseOver={handleBarHover}
+            onMouseOver={(e) => {
+              if (e.activePayload) {
+                setHoveredData(e.activePayload[0].payload);
+              }
+            }}
           >
             <XAxis
               dataKey="tweet"
@@ -63,16 +77,26 @@ const SecondPage = () => {
 
       {/* Navigation Buttons */}
       <div className="flex space-x-4 mt-8">
-        <Link to="/">
+        <Link
+          to="/"
+          onClick={(e) => {
+            if (!handleButtonClick(13, 16)) e.preventDefault();
+          }}
+        >
           <button
             className={`px-4 py-2 rounded-md transition-colors text-white hover:bg-blue-900 ${
               location.pathname === "/" ? "bg-purple-900" : "bg-blue-600"
             }`}
           >
-            Slide 1
+            Task 1
           </button>
         </Link>
-        <Link to="/secondpage">
+        <Link
+          to="/secondpage"
+          onClick={(e) => {
+            if (!handleButtonClick(15, 18)) e.preventDefault();
+          }}
+        >
           <button
             className={`px-4 py-2 rounded-md transition-colors text-white hover:bg-blue-900 ${
               location.pathname === "/secondpage"
@@ -80,10 +104,15 @@ const SecondPage = () => {
                 : "bg-blue-600"
             }`}
           >
-            Slide 2
+            Task 2
           </button>
         </Link>
-        <Link to="/engagementdashboard">
+        <Link
+          to="/engagementdashboard"
+          onClick={(e) => {
+            if (!handleButtonClick(12, 18)) e.preventDefault();
+          }}
+        >
           <button
             className={`px-4 py-2 rounded-md transition-colors text-white hover:bg-blue-900 ${
               location.pathname === "/engagementdashboard"
@@ -91,7 +120,7 @@ const SecondPage = () => {
                 : "bg-blue-600"
             }`}
           >
-            Slide 3
+            Task 3
           </button>
         </Link>
       </div>
