@@ -103,50 +103,6 @@ const Dashboard = () => {
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex space-x-4 mt-8">
-        <Link
-          to="/"
-          onClick={(e) => {
-            if (!handleButtonClick(13, 16)) e.preventDefault();
-          }}
-        >
-          <button
-            className={`px-4 py-2 rounded-md transition-colors text-white hover:bg-blue-900 ${
-              location.pathname === "/" ? "bg-purple-900" : "bg-blue-600"
-            }`}
-          >
-            Task 1
-          </button>
-        </Link>
-        <Link
-          to="/secondpage"
-          onClick={(e) => {
-            if (!handleButtonClick(15, 18)) e.preventDefault();
-          }}
-        >
-          <button
-            className={`px-4 py-2 rounded-md transition-colors text-white hover:bg-blue-900 ${
-              location.pathname === "/secondpage" ? "bg-purple-900" : "bg-blue-600"
-            }`}
-          >
-            Task 2
-          </button>
-        </Link>
-        <Link
-          to="/engagementdashboard"
-          onClick={(e) => {
-            if (!handleButtonClick(12, 18)) e.preventDefault();
-          }}
-        >
-          <button
-            className={`px-4 py-2 rounded-md transition-colors text-white hover:bg-blue-900 ${
-              location.pathname === "/engagementdashboard" ? "bg-purple-900" : "bg-blue-600"
-            }`}
-          >
-            Task 3
-          </button>
-        </Link>
-      </div>
     </div>
   );
 };
